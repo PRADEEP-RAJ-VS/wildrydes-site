@@ -6,7 +6,10 @@ window._config = {
 
         userPoolClientId: '4g2spnlieefhk94h3kpljvq40l', // e.g. 25ddkmj4v6hfsfvruhpfi7n4hv
 
-        region: 'us-east-1' // e.g. us-east-2
+        region: 'us-east-1', // e.g. us-east-2
+      
+        userPoolClientSecret: '1a39chbvq80vdga3cl3ahk677q10eiirk8ca3ak5oi28i0a6admu' // Replace with your actual secret
+
 
     },
 
