@@ -143,15 +143,36 @@ var WildRydes = window.WildRydes || {};
 
 
     function signin(email, password, onSuccess, onFailure) {
+    var authenticationDetails;
+    var cognitoUser = createCognitoUser(email);
 
-        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+    if (window._config.cognito.userPoolClientSecret) {
+        // Calculate SECRET_HASH
+        var secretHash = CryptoJS.HmacSHA256(toUsername(email) + window._config.cognito.userPoolClientId, window._config.cognito.userPoolClientSecret).toString();
 
-            Username: toUsername(email),
+        console.log("Config Secret:", window._config.cognito.userPoolClientSecret);
+        console.log("Username:", toUsername(email));
+        console.log("Client ID:", window._config.cognito.userPoolClientId);
+        console.log("Generated SECRET_HASH:", secretHash);
 
-            Password: password
+        authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+            Username: toUsername(email),
+            Password: password,
+            ClientSecret: window._config.cognito.userPoolClientSecret,
+            SECRET_HASH: secretHash
+        });
+    } else {
+        authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+            Username: toUsername(email),
+            Password: password
+        });
+    }
 
-        });
-
+    cognitoUser.authenticateUser(authenticationDetails, {
+        onSuccess: onSuccess,
+        onFailure: onFailure
+    });
+}
 
 
         var cognitoUser = createCognitoUser(email);
