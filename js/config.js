@@ -8,7 +8,6 @@ window._config = {
 
         region: 'us-east-1', // e.g. us-east-2
       
-        userPoolClientSecret: '1a39chbvq80vdga3cl3ahk677q10eiirk8ca3ak5oi28i0a6admu' // Replace with your actual secret
 
 
     },
